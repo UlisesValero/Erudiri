@@ -1,0 +1,29 @@
+{
+  "name": "erudiri",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/UlisesValero/Erudiri#readme",
+  "bugs": {
+    "url": "https://github.com/UlisesValero/Erudiri/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UlisesValero/Erudiri.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "6.18",
+    "mongoose": "^8.17.0"
+  }
+}
