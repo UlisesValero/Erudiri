@@ -1,11 +1,11 @@
-import Usuario from '../models/Usuario.js'
+import {userModel} from '../models/Usuario.js'
 import Arista from '../models/Artista.js'
 import Nivel from '../models/Nivel.js'
 
 export const getUserProgress = async (req, res) => {
   const { userId } = req.params
   try {
-    const user = await Usuario.findById(userId).populate('progress.aristaId progress.levelId')
+    const user = await userModel.findById(userId).populate('progress.aristaId progress.levelId')
     res.status(200).json(user.progress)
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener progreso', error })
@@ -16,7 +16,7 @@ export const updateUserProgress = async (req, res) => {
   const { userId, levelId, aristaId, score } = req.body
 
   try {
-    const user = await Usuario.findById(userId);
+    const user = await userModel.findById(userId);
 
     // Si ya existe progreso sobre esa arista, actualizar
     const index = user.progress.findIndex(p =>
@@ -46,7 +46,7 @@ export const canAccessArista = async (req, res) => {
   const { userId, aristaId } = req.params
 
   try {
-    const user = await Usuario.findById(userId)
+    const user = await userModel.findById(userId)
     const arista = await Arista.findById(aristaId).populate('level')
 
     if (!user || !arista) {

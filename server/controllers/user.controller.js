@@ -1,8 +1,8 @@
-import Usuario from '../models/Usuario.js'
+import {userModel} from '../models/Usuario.js'
 
 export const getUsers = async (req, res) => {
   try {
-    const usuarios = await Usuario.find().select('-contraseña')
+    const usuarios = await userModel.find().select('-contraseña')
     res.json(usuarios)
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener usuarios' })
@@ -11,7 +11,7 @@ export const getUsers = async (req, res) => {
 
 export const getUserById = async (req, res) => {
   try {
-    const usuario = await Usuario.findById(req.params.id).select('-contraseña')
+    const usuario = await userModel.findById(req.params.id).select('-contraseña')
     if (!usuario) return res.status(404).json({ message: 'Usuario no encontrado' })
     res.json(usuario)
   } catch (error) {
@@ -21,7 +21,7 @@ export const getUserById = async (req, res) => {
 
 export const postUser = async (req, res) => {
   try {
-    const usuario = await Usuario.findByIdAndUpdate(req.params.id, req.body, { new: true }).select('-contraseña')
+    const usuario = await userModel.findByIdAndUpdate(req.params.id, req.body, { new: true }).select('-contraseña')
     if (!usuario) return res.status(404).json({ message: 'Usuario no encontrado' })
     res.json(usuario)
   } catch (error) {
@@ -31,7 +31,7 @@ export const postUser = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    const usuario = await Usuario.findByIdAndDelete(req.params.id)
+    const usuario = await userModel.findByIdAndDelete(req.params.id)
     if (!usuario) return res.status(404).json({ message: 'Usuario no encontrado' })
     res.json({ message: 'Usuario eliminado correctamente' })
   } catch (error) {

@@ -1,8 +1,8 @@
-import Empresa from '../models/Empresa.js'
+import {companyModel} from '../models/Empresa.js'
 
 export const createCompany = async (req, res) => {
   try {
-    const empresa = await Empresa.create(req.body)
+    const empresa = await companyModel.create(req.body)
     res.status(201).json(empresa)
   } catch (error) {
     res.status(500).json({ message: 'Error al crear empresa' })
@@ -11,7 +11,7 @@ export const createCompany = async (req, res) => {
 
 export const getCompanies = async (req, res) => {
   try {
-    const empresas = await Empresa.find()
+    const empresas = await companyModel.find()
     res.json(empresas)
   } catch (error) {
     res.status(500).json({ message: 'Error al obtener empresas' })
@@ -20,7 +20,7 @@ export const getCompanies = async (req, res) => {
 
 export const getCompanyById = async (req, res) => {
   try {
-    const empresa = await Empresa.findById(req.params.id)
+    const empresa = await companyModel.findById(req.params.id)
     if (!empresa) return res.status(404).json({ message: 'Empresa no encontrada' })
     res.json(empresa);
   } catch (error) {
@@ -30,7 +30,7 @@ export const getCompanyById = async (req, res) => {
 
 export const postCompany = async (req, res) => {
   try {
-    const empresa = await Empresa.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    const empresa = await companyModel.findByIdAndUpdate(req.params.id, req.body, { new: true })
     if (!empresa) return res.status(404).json({ message: 'Empresa no encontrada' })
     res.json(empresa)
   } catch (error) {
@@ -40,7 +40,7 @@ export const postCompany = async (req, res) => {
 
 export const deleteCompany = async (req, res) => {
   try {
-    const empresa = await Empresa.findByIdAndDelete(req.params.id)
+    const empresa = await companyModel.findByIdAndDelete(req.params.id)
     if (!empresa) return res.status(404).json({ message: 'Empresa no encontrada' })
     res.json({ message: 'Empresa eliminada correctamente' })
   } catch (error) {

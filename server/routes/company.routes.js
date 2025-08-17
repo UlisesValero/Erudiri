@@ -10,7 +10,7 @@ import { protegerRuta } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
-router.post('/', protegerRuta, createCompany);
+router.post('/', createCompany);
 router.get('/', protegerRuta, getCompanies);
 router.get('/:id', protegerRuta, getCompanyById);
 router.put('/:id', protegerRuta, postCompany);

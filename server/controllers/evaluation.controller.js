@@ -1,5 +1,5 @@
 import Evaluacion from '../models/Evaluacion.js'
-import Usuario from '../models/Usuario.js'
+import {userModel} from '../models/Usuario.js'
 
 // Crear una nueva evaluación (admin o IA)
 export const crearEvaluacion = async (req, res) => {
@@ -83,7 +83,7 @@ export const enviarRespuestas = async (req, res) => {
 
     // Actualizar progreso si aprobó
     if (aprobado) {
-      await Usuario.findOneAndUpdate(
+      await userModel.findOneAndUpdate(
         { nombre: usuarioId },
         { $addToSet: { completado: aristaId } },
         { upsert: true }

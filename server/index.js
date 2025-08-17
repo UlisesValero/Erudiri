@@ -8,6 +8,7 @@ import companyRoutes from './routes/company.routes.js';
 import contentRoutes from './routes/content.routes.js';
 import evaluationRoutes from './routes/evaluation.routes.js';
 import progressRoutes from './routes/progress.routes.js';
+import userRoutes from './routes/user.routes.js'
 
 dotenv.config();
 const app = express();
@@ -20,9 +21,11 @@ app.use('/api/company', companyRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/evaluation', evaluationRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/user', userRoutes);
 
-const PORT = process.env.PORT || 5000;
-mongoose.connect(process.env.MONGO_URI, {
+
+const PORT = 8080
+mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
