@@ -1,31 +1,29 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
 
 export const userSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   contraseña: { type: String, required: true },
-  empresa: { type: mongoose.Schema.Types.ObjectId, ref: 'Empresa', required: true },
-  rol: { type: String, enum: ['admin', 'empleado'], default: 'empleado' },
+  empresa: { type: mongoose.Schema.Types.ObjectId, ref: 'Empresa'},
+  rol: { type: String, enum: ['admin', 'empleado'], required: true},
   progreso: [
     {
       nivel: { type: mongoose.Schema.Types.ObjectId, ref: 'Nivel' },
       aristasCompletadas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Arista' }]
     }
   ]
-}, { timestamps: true });
+}, { timestamps: true })
 
-// Hashea contraseña antes de guardar
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('contraseña')) return next();
-  const salt = await bcrypt.genSalt(10);
-  this.contraseña = await bcrypt.hash(this.contraseña, salt);
-  next();
-});
+  if (!this.isModified('contraseña')) return next()
+  const salt = await bcrypt.genSalt(10)
+  this.contraseña = await bcrypt.hash(this.contraseña, salt)
+  next()
+})
 
-// Comparar contraseña ingresada
 userSchema.methods.compararContraseña = function (input) {
-  return bcrypt.compare(input, this.contraseña);
-};
+  return bcrypt.compare(input, this.contraseña)
+}
 
-export const userModel = mongoose.model('usuario', userSchema);
+export const userModel = mongoose.model('usuario', userSchema)

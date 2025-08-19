@@ -19,11 +19,13 @@ export const getUserById = async (req, res) => {
   }
 }
 
-export const postUser = async (req, res) => {
+export const putUser = async (req, res) => {
   try {
-    const usuario = await userModel.findByIdAndUpdate(req.params.id, req.body, { new: true }).select('-contraseña')
-    if (!usuario) return res.status(404).json({ message: 'Usuario no encontrado' })
-    res.json(usuario)
+    const user = await userModel.findById(req.params.id)
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' })
+      if(user.rol !== "admin") return res.status(400).json({message: 'No tenes permiso para modificar el rol'})
+        const updatedUser = await userModel.findByIdAndUpdate(req.params.id, req.body, { new: true }).select('-contraseña')
+    res.json(updatedUser)
   } catch (error) {
     res.status(500).json({ message: 'Error al actualizar usuario' })
   }
